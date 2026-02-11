@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import '../providers/language_provider.dart';
 
 class HeroSection extends StatelessWidget {
@@ -14,11 +16,36 @@ class HeroSection extends StatelessWidget {
     required this.onScrollToTerminal,
   });
 
+  Future<void> _downloadCV() async {
+    try {
+      // ✅ Web: ouvre le fichier servi par le site
+      // ⚠️ Assure-toi que le PDF existe bien dans: web/assets/cv/CV.pdf
+      // Desktop/Mobile: ouvre un lien https public (GitHub raw)
+      final Uri uri = kIsWeb
+          ? Uri.parse('assets/cv/CV.pdf')
+          : Uri.parse(
+              'https://raw.githubusercontent.com/sidattBelkhair/sidatt/main/assets/cv/CV.pdf',
+            );
+
+      final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (!ok) {
+        debugPrint('Impossible d’ouvrir le CV: $uri');
+      }
+    } catch (e) {
+      debugPrint('Erreur lors du téléchargement du CV: $e');
+    }
+  }
+
+  Future<void> _openGithub() async {
+    final uri = Uri.parse('https://github.com/sidattBelkhair');
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  }
+
   @override
   Widget build(BuildContext context) {
     final langProvider = Provider.of<LanguageProvider>(context);
     final size = MediaQuery.of(context).size;
-    
+
     return Container(
       height: size.height,
       width: size.width,
@@ -39,7 +66,8 @@ class HeroSection extends StatelessWidget {
                     ),
                   ),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: const Color(0xFF00ff41).withOpacity(0.1),
                       border: Border.all(color: const Color(0xFF00ff41)),
@@ -139,12 +167,12 @@ class HeroSection extends StatelessWidget {
                       _ActionButton(
                         icon: Icons.code,
                         label: langProvider.getTranslation('view_github'),
-                        onPressed: () => launchUrl(Uri.parse('https://github.com/sidattBelkhair')),
+                        onPressed: _openGithub,
                       ),
                       _ActionButton(
                         icon: Icons.download,
                         label: langProvider.getTranslation('download_cv'),
-                        onPressed: () {},
+                        onPressed: _downloadCV,
                       ),
                     ],
                   ),
@@ -161,7 +189,8 @@ class HeroSection extends StatelessWidget {
                   height: 300,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(color: const Color(0xFF00ff41), width: 2),
+                    border:
+                        Border.all(color: const Color(0xFF00ff41), width: 2),
                     boxShadow: [
                       BoxShadow(
                         color: const Color(0xFF00ff41).withOpacity(0.3),
@@ -221,8 +250,12 @@ class _ActionButtonState extends State<_ActionButton> {
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           decoration: BoxDecoration(
             color: widget.isPrimary
-                ? (isHovered ? const Color(0xFF00ff41) : const Color(0xFF00ff41).withOpacity(0.1))
-                : (isHovered ? const Color(0xFF00ff41).withOpacity(0.2) : Colors.transparent),
+                ? (isHovered
+                    ? const Color(0xFF00ff41)
+                    : const Color(0xFF00ff41).withOpacity(0.1))
+                : (isHovered
+                    ? const Color(0xFF00ff41).withOpacity(0.2)
+                    : Colors.transparent),
             border: Border.all(
               color: const Color(0xFF00ff41),
               width: 2,
@@ -248,14 +281,20 @@ class _ActionButtonState extends State<_ActionButton> {
                 size: 18,
               ),
               const SizedBox(width: 8),
-              Text(
-                widget.label,
-                style: TextStyle(
-                  color: widget.isPrimary
-                      ? (isHovered ? Colors.black : const Color(0xFF00ff41))
-                      : const Color(0xFF00ff41),
-                  fontFamily: 'JetBrains Mono',
-                  fontWeight: FontWeight.bold,
+
+              // ✅ Fix RenderFlex overflow: le texte ne déborde plus
+              Flexible(
+                child: Text(
+                  widget.label,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: false,
+                  style: TextStyle(
+                    color: widget.isPrimary
+                        ? (isHovered ? Colors.black : const Color(0xFF00ff41))
+                        : const Color(0xFF00ff41),
+                    fontFamily: 'JetBrains Mono',
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ],

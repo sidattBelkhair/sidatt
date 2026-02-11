@@ -33,7 +33,7 @@ class Footer extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            '© 2025 All rights reserved.',
+            '© 2026 All rights reserved.',
             style: TextStyle(
               color: Colors.white.withOpacity(0.4),
               fontSize: 12,
@@ -43,11 +43,11 @@ class Footer extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _FooterLink(label: 'GitHub', onTap: () {}),
+              _FooterLink(label: 'https://github.com/sidattBelkhair', onTap: () {}),
               const Text(' • ', style: TextStyle(color: Colors.white24)),
-              _FooterLink(label: 'LinkedIn', onTap: () {}),
+              _FooterLink(label: 'https://www.linkedin.com/in/sidatt-belkhair-60528935b/', onTap: () {}),
               const Text(' • ', style: TextStyle(color: Colors.white24)),
-              _FooterLink(label: 'TryHackMe', onTap: () {}),
+              _FooterLink(label: 'https://tryhackme.com/p/SidattBelkhair', onTap: () {}),
             ],
           ),
         ],

@@ -25,7 +25,7 @@ class Project {
 
 final List<Project> projects = [
   Project(
-    name: 'Devoir_Soa_project',
+    name: 'Soap_Rest_XML Project',
     description: 'Bank card management system with secure transaction handling',
     descriptionFr: 'Système de gestion des cartes bancaires avec traitement sécurisé des transactions',
     descriptionAr: 'نظام إدارة بطاقات بنكية مع معالجة آمنة للمعاملات',
@@ -52,7 +52,7 @@ final List<Project> projects = [
     date: DateTime(2024, 12),
   ),
   Project(
-    name: 'Student Orientation App',
+    name: 'Students Orientation App',
     description: 'Web application for student orientation using HTML/CSS/JS/PHP-MySQL',
     descriptionFr: 'Application web d\'orientation étudiante utilisant HTML/CSS/JS/PHP-MySQL',
     descriptionAr: 'تطبيق ويب لتوجيه الطلاب باستخدام HTML/CSS/JS/PHP-MySQL',
@@ -79,7 +79,7 @@ final List<Project> projects = [
     date: DateTime(2024, 9),
   ),
   Project(
-    name: 'NuitRamadan',
+    name: 'NuitRamadan App ',
     description: 'Ramadan night activities management application',
     descriptionFr: 'Application de gestion des activités de la nuit du Ramadan',
     descriptionAr: 'تطبيق إدارة أنشطة ليالي رمضان',
@@ -88,7 +88,7 @@ final List<Project> projects = [
     date: DateTime(2025, 3),
   ),
   Project(
-    name: 'defi2',
+    name: 'defi2 CSS ',
     description: 'Challenge project with modern CSS styling',
     descriptionFr: 'Projet défi avec style CSS moderne',
     descriptionAr: 'مشروع تحدي مع تصميم CSS حديث',

@@ -122,13 +122,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           onPressed: () => langProvider.toggleLanguage(),
                           tooltip: 'Change Language',
                         ),
-                        IconButton(
-                          icon: Icon(
-                            themeProvider.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                            color: const Color(0xFF00ff41),
-                          ),
-                          onPressed: () => themeProvider.toggleTheme(),
-                          tooltip: 'Toggle Theme',
+                        Consumer<ThemeProvider>(
+                          builder: (context, theme, _) {
+                            return IconButton(
+                              icon: Icon(
+                                theme.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                                color: const Color(0xFF00ff41),
+                              ),
+                              onPressed: () => theme.toggleTheme(),
+                              tooltip: 'Toggle Theme',
+                            );
+                          },
                         ),
                       ],
                     ),
